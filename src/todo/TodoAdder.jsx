@@ -10,20 +10,21 @@ const TodoAdder = () => {
   return (
     <>
       <div className="todo-adder">
-        <input
-          type="text"
-          name="new_todo"
-          value={newTodo}
-          onChange={(e) => setNewTodo(e.target.value)}
-        />
-        <button
-          onClick={() => {
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
             dispatch(addTodo(newTodo));
             setNewTodo("");
           }}
         >
-          Add
-        </button>
+          <input
+            type="text"
+            name="new_todo"
+            value={newTodo}
+            onChange={(e) => setNewTodo(e.target.value)}
+          />
+          <button>Add</button>
+        </form>
       </div>
     </>
   );

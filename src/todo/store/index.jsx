@@ -5,15 +5,12 @@ export const todoSlice = createSlice({
   initialState: { todos: ["foo"] },
   reducers: {
     addTodo(state, action) {
-      console.log("state: ", state);
-      console.log("action: ", action);
-      console.log("addTodo: ");
       state.todos = [...state.todos, action.payload];
-      //   state = [state, action.payload];
-      //   state.todo.append(action.payload);
     },
     removeTodo(state, action) {
-      console.log("removeTodo: ");
+      state.todos = state.todos.filter(
+        (data, index) => index !== action.payload
+      );
     },
     editTodo(state, action) {
       console.log("editTodo: ");
