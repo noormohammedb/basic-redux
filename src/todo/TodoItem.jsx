@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { removeTodo, editTodo } from "./store";
 
@@ -6,17 +6,24 @@ const TodoItem = ({ data, index }) => {
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
   const [editValue, setEditValue] = useState(data);
+  const editBoxElement = useRef();
 
-  const removeFromTodo = (event) => {
-    dispatch(removeTodo(+event.target.dataset.index));
+  const removeFromTodo = () => {
+    dispatch(removeTodo(index));
   };
 
-  const editFromTodo = (event) => {
+  const editFromTodo = () => {
     if (isEdit) {
-      dispatch(editTodo(+event.target.dataset.index));
+      dispatch(editTodo({ index, editValue }));
     }
     setIsEdit(!isEdit);
   };
+
+  useEffect(() => {
+    if (isEdit) {
+      editBoxElement.current?.focus();
+    }
+  }, [isEdit]);
 
   return (
     <>
@@ -24,27 +31,29 @@ const TodoItem = ({ data, index }) => {
         <span>{index + 1}. </span>
         {isEdit ? (
           <>
-            <input
-              type="text"
-              value={editValue}
-              onChange={(e) => setEditValue(e.target.value)}
-            />
-            <button
-              className="hide-btn"
-              data-index={index}
-              onClick={editFromTodo}
+            <form
+              className="flat-form"
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (!editValue) return;
+                editFromTodo();
+              }}
             >
-              <SvgOk />
-            </button>
+              <input
+                type="text"
+                value={editValue}
+                ref={editBoxElement}
+                onChange={(e) => setEditValue(e.target.value)}
+              />
+              <button className="hide-btn">
+                <SvgOk />
+              </button>
+            </form>
           </>
         ) : (
           <>
             <p className="inline">{data}</p>
-            <button
-              className="hide-btn"
-              data-index={index}
-              onClick={editFromTodo}
-            >
+            <button className="hide-btn" onClick={editFromTodo}>
               <SvgEdit />
             </button>
           </>

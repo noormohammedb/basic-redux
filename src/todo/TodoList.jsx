@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 
 const TodoList = () => {
   const todoData = useSelector((state) => state.todos);
-  console.log("TodoList: state.todos: ", todoData);
   return (
     <>
       <h1>TodoList</h1>

@@ -2,7 +2,7 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 export const todoSlice = createSlice({
   name: "todo",
-  initialState: { todos: ["foo"] },
+  initialState: { todos: [] },
   reducers: {
     addTodo(state, action) {
       state.todos = [...state.todos, action.payload];
@@ -13,7 +13,7 @@ export const todoSlice = createSlice({
       );
     },
     editTodo(state, action) {
-      console.log("editTodo: ");
+      state.todos[action.payload.index] = action.payload.editValue;
     },
   },
 });

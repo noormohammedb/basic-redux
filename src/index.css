@@ -26,3 +26,7 @@ body {
   border: solid 0.2rem #e8f4bd;
   border-radius: 0.2rem;
 }
+
+.flat-form {
+  display: inline;
+}
