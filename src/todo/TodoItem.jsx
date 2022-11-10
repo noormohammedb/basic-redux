@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { removeTodo, editTodo } from "./store";
+import { removeTodo, editTodo, toggleMark } from "./store";
 
-const TodoItem = ({ data, index }) => {
+const TodoItem = ({ todoItem, index }) => {
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
-  const [editValue, setEditValue] = useState(data);
+  const [editValue, setEditValue] = useState(todoItem?.data);
   const editBoxElement = useRef();
 
   const removeFromTodo = () => {
@@ -17,6 +17,10 @@ const TodoItem = ({ data, index }) => {
       dispatch(editTodo({ index, editValue }));
     }
     setIsEdit(!isEdit);
+  };
+
+  const markDone = () => {
+    dispatch(toggleMark(index));
   };
 
   useEffect(() => {
@@ -52,12 +56,17 @@ const TodoItem = ({ data, index }) => {
           </>
         ) : (
           <>
-            <p className="inline">{data}</p>
+            <p className={`inline strike-${todoItem.isFinished}`}>
+              {todoItem.data}
+            </p>
             <button className="hide-btn" onClick={editFromTodo}>
               <SvgEdit />
             </button>
           </>
         )}
+        <button className="" onClick={markDone}>
+          <SVGDone />
+        </button>
         <button
           className="delete-btn"
           data-index={index}
@@ -105,6 +114,27 @@ const SvgOk = () => {
           d="M1004.237,99.152l-611.44,611.441L194.492,512.288L0,706.779
 	l198.305,198.306l195.762,195.763L588.56,906.355L1200,294.916L1004.237,99.152z"
         />
+      </svg>
+    </>
+  );
+};
+const SVGDone = () => {
+  return (
+    <>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        strokeWidth="1"
+        stroke="currentColor"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <circle cx="12" cy="12" r="9"></circle>
+        <path d="M9 12l2 2l4 -4"></path>
       </svg>
     </>
   );

@@ -7,8 +7,8 @@ const TodoList = () => {
   return (
     <>
       <h1>TodoList</h1>
-      {todoData.map((data, index) => (
-        <TodoItem key={index} data={data} index={index} />
+      {todoData.map((todoItem, index) => (
+        <TodoItem key={index} todoItem={todoItem} index={index} />
       ))}
     </>
   );

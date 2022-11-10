@@ -13,12 +13,21 @@ export const todoSlice = createSlice({
       );
     },
     editTodo(state, action) {
-      state.todos[action.payload.index] = action.payload.editValue;
+      state.todos[action.payload.index] = {
+        data: action.payload.editValue,
+        isFinished: state.todos[action.payload.index].isFinished,
+      };
+    },
+    toggleMark(state, action) {
+      state.todos[action.payload] = {
+        data: state.todos[action.payload].data,
+        isFinished: !state.todos[action.payload].isFinished,
+      };
     },
   },
 });
 
-export const { addTodo, removeTodo, editTodo } = todoSlice.actions;
+export const { addTodo, removeTodo, editTodo, toggleMark } = todoSlice.actions;
 
 export const todoStore = configureStore({
   reducer: todoSlice.reducer,

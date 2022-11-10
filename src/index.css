@@ -30,3 +30,8 @@ body {
 .flat-form {
   display: inline;
 }
+
+.strike-true {
+  color: red;
+  text-decoration: line-through;
+}

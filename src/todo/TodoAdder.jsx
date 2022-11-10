@@ -1,10 +1,8 @@
 import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { addTodo } from "./store";
-// import { useSelector } from "react-redux";
 
 const TodoAdder = () => {
-  // const todoData = useSelector((state) => state);
   const inputElement = useRef();
   const dispatch = useDispatch();
   const [newTodo, setNewTodo] = useState("");
@@ -16,7 +14,7 @@ const TodoAdder = () => {
           onSubmit={(e) => {
             e.preventDefault();
             if (!newTodo) return;
-            dispatch(addTodo(newTodo));
+            dispatch(addTodo({ data: newTodo, isFinished: false }));
             setNewTodo("");
             inputElement.current.focus();
           }}
